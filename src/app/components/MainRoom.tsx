@@ -3,9 +3,10 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
 import { ArrowLeft, EllipsisVertical, Paperclip, Send } from "lucide-react";
 import Image from "next/image";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import BubbleChat from "./BubbleChat";
 import ScrollToBottom from "./ScrollToBottom";
+import UploadMenu from "./UploadMenu";
 
 const dummyChat = [
   {
@@ -48,13 +49,14 @@ const dummyChat = [
 
 export default function MainRoom() {
   const contentRef = useRef<HTMLDivElement>(null);
+  const [openUpload, setOpenUpload] = useState(false);
 
   return (
     <section className="flex items-center justify-center pt-20 md:pt-0  pb-10 ">
       <div className="  bg-white shadow-xl inset-shadow-2xs   ">
         <section
           id="header"
-          className="p-3 fixed md:static w-full top-0 bg-white"
+          className="p-3 md:px-5  fixed md:static w-full top-0 bg-white"
         >
           <div className="mb-2 flex justify-center sm:hidden">
             <Image
@@ -66,7 +68,7 @@ export default function MainRoom() {
             />
           </div>
           <div className="flex justify-between items-center">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 md:gap-5">
               <div>
                 <ArrowLeft className="size-5 text-gray-600" />{" "}
               </div>
@@ -108,20 +110,30 @@ export default function MainRoom() {
           id="footer"
           className="mt-10 md:mt-0 fixed md:static bg-white  w-full h-15 bottom-0 flex items-center justify-around md:rounded-xl md:overflow-hidden  "
         >
-          <div id="attachment" className="   p-2">
+          <button
+            id="attachment"
+            type="button"
+            className="cursor-pointer   p-2"
+            onClick={() => setOpenUpload(true)}
+          >
             <Paperclip className="size-5" />
-          </div>
+          </button>
           <div id="text" className="w-[65%] md:w-[75%] xl:w-[80%]">
             <Input
               className="bg-gray-100 rounded-xl border-none "
               placeholder="Tulis pesan Anda ..."
             />
           </div>
-          <div id="send" className="  p-2 rounded-full bg-gray-200">
+          <button
+            id="send"
+            className="  p-2 rounded-full bg-gray-200 cursor-pointer"
+          >
             <Send className="size-5 text-gray-700" />
-          </div>
+          </button>
         </section>
       </div>
+      {/* Upload Menu */}
+      <UploadMenu open={openUpload} setOpen={setOpenUpload} />
     </section>
   );
 }

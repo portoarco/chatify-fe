@@ -2,10 +2,10 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
 import { ArrowLeft, EllipsisVertical, Paperclip, Send } from "lucide-react";
+import { motion } from "motion/react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import BubbleChat from "./BubbleChat";
-import ScrollToBottom from "./ScrollToBottom";
 import UploadMenu from "./UploadMenu";
 
 const dummyChat = [
@@ -50,6 +50,31 @@ const dummyChat = [
 export default function MainRoom() {
   const contentRef = useRef<HTMLDivElement>(null);
   const [openUpload, setOpenUpload] = useState(false);
+  const [chats, setChats] = useState(dummyChat);
+  const [newMessage, setNewMessage] = useState("");
+
+  const handleNewMessage = () => {
+    if (!newMessage.trim()) return;
+
+    const messageObject = {
+      id: Date.now(),
+      type: "text",
+      message: newMessage,
+      sender: "test2mail.com",
+      chatRole: 0,
+    };
+    setChats([...chats, messageObject]);
+    setNewMessage("");
+  };
+
+  useEffect(() => {
+    if (contentRef.current) {
+      contentRef.current.scrollTo({
+        top: contentRef.current.scrollHeight,
+        behavior: "smooth",
+      });
+    }
+  }, [chats]);
 
   return (
     <section className="flex items-center justify-center pt-20 md:pt-0  pb-10 ">
@@ -69,9 +94,18 @@ export default function MainRoom() {
           </div>
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-2 md:gap-5">
-              <div>
+              <motion.button
+                onClick={() => {
+                  const confirm = window.confirm("Are you sure?");
+                  if (!confirm) return;
+                  window.location.reload();
+                }}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.8 }}
+                className="cursor-pointer"
+              >
                 <ArrowLeft className="size-5 text-gray-600" />{" "}
-              </div>
+              </motion.button>
               <Avatar className="size-10">
                 <AvatarImage
                   src="https://picsum.photos/id/237/200/300"
@@ -81,11 +115,18 @@ export default function MainRoom() {
               </Avatar>
               <div>
                 <p className="font-bold">Produk A</p>
-                <p className="text-xs">Room 5111</p>
+                <p className="text-xs">
+                  Room Code: <span className="font-bold">555</span>{" "}
+                </p>
               </div>
             </div>
             <div>
-              <EllipsisVertical />
+              <button
+                onClick={() => alert("Opening")}
+                className="cursor-pointer"
+              >
+                <EllipsisVertical />
+              </button>
             </div>
           </div>
         </section>
@@ -93,9 +134,9 @@ export default function MainRoom() {
         <section
           id="content"
           ref={contentRef}
-          className="bg-sky-200/50   px-3 md:px-7 pb-7 pt-5 md:h-[70vh] overflow-auto "
+          className="bg-sky-200/50   px-3 md:px-7 pb-7 pt-5 h-[90vh] md:h-[70vh] overflow-auto "
         >
-          {dummyChat.map((chat, idx) => (
+          {chats.map((chat, idx) => (
             <BubbleChat
               key={idx}
               chatRole={{ role: chat.chatRole }}
@@ -122,14 +163,25 @@ export default function MainRoom() {
             <Input
               className="bg-gray-100 rounded-xl border-none "
               placeholder="Tulis pesan Anda ..."
+              value={newMessage}
+              onChange={(e) => setNewMessage(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  handleNewMessage();
+                }
+              }}
             />
           </div>
-          <button
+          <motion.button
             id="send"
             className="  p-2 rounded-full bg-gray-200 cursor-pointer"
+            onClick={handleNewMessage}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.8 }}
           >
             <Send className="size-5 text-gray-700" />
-          </button>
+          </motion.button>
         </section>
       </div>
       {/* Upload Menu */}

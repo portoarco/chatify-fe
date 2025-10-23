@@ -13,7 +13,7 @@ export default function Home() {
           className="w-50"
         />
       </header>
-      <main className="md:w-[90vw] lg:w-[80vw] xl:w-[60vw] mx-auto">
+      <main className="md:w-[90vw] lg:w-[80vw] xl:w-[60vw] mx-auto rounded-md overflow-hidden">
         <MainRoom />
       </main>
       <footer></footer>

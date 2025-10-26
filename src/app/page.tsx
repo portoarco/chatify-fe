@@ -41,10 +41,12 @@ export default function Home() {
     <>
       <LayoutWrapper>
         <section className="flex justify-center items-center h-screen md:h-full">
-          <section className="bg-white shadow-xl inset-shadow-2xs p-5 w-[90vw] md:w-full  ">
+          <section className="bg-white shadow-xl inset-shadow-2xs p-5 w-[90vw] md:w-full rounded-md  ">
             <form>
               <div>
-                <h1 className="text-2xl font-bold mb-2">Join Chat Room</h1>
+                <h1 className="text-2xl font-bold mb-2 text-center">
+                  Join Chat Room
+                </h1>
                 <div>
                   <label>Email</label>
                   <Input
@@ -81,6 +83,10 @@ export default function Home() {
                 >
                   Klik ini untuk contoh chat room
                 </Link>
+                <p className="text-xs font-light">
+                  For testing, input code{" "}
+                  <span className="font-medium">11</span>{" "}
+                </p>
               </div>
             </form>
           </section>

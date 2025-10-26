@@ -14,7 +14,7 @@ const dummyChat: any = [
   {
     id: 885512,
     type: "TEXT",
-    message: "Selamat",
+    message: "Selamat Malam",
     sender: "customer@mail.com",
   },
   {

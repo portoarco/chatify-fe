@@ -19,7 +19,7 @@ const quickSand = Quicksand({
 });
 
 export const metadata: Metadata = {
-  title: "Chatify - #1 Chat Platform in the World",
+  title: "Chatify Web- #1 Chat Platform in the World",
   description: "The best chat platform in the world",
   icons: {
     icon: "/logonly.png",

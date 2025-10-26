@@ -4,14 +4,13 @@ import { Input } from "@/components/ui/input";
 import { ArrowLeft, EllipsisVertical, Paperclip, Send } from "lucide-react";
 import { motion } from "motion/react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import BubbleChat from "../components/BubbleChat";
-import UploadMenu from "../components/UploadMenu";
 import LayoutWrapper from "../components/LayoutWrapper";
-import { useRouter } from "next/navigation";
-import { IChat } from "@/types/message";
+import UploadMenu from "../components/UploadMenu";
 
-const dummyChat = [
+const dummyChat: any = [
   {
     id: 885512,
     type: "TEXT",
@@ -51,6 +50,7 @@ export default function MainRoom() {
   const contentRef = useRef<HTMLDivElement>(null);
   const [openUpload, setOpenUpload] = useState(false);
   const [chats, setChats] = useState(dummyChat);
+  console.log(chats);
   const [newMessage, setNewMessage] = useState("");
 
   const handleNewMessage = () => {
@@ -77,7 +77,7 @@ export default function MainRoom() {
       fileName: file.name,
     };
 
-    setChats((prev) => [...prev, messageObject]);
+    setChats((prev: any) => [...prev, messageObject]);
   };
 
   useEffect(() => {
@@ -153,7 +153,7 @@ export default function MainRoom() {
               ref={contentRef}
               className="bg-sky-200/50   px-3 md:px-7 pb-7 pt-5 h-[90vh] md:h-[70vh] overflow-auto "
             >
-              {chats.map((chat, idx) => {
+              {chats.map((chat: any, idx: any) => {
                 const isSender = chat.sender === currentUserEmail;
                 return (
                   <BubbleChat
@@ -161,7 +161,7 @@ export default function MainRoom() {
                     isSender={isSender}
                     email={chat.sender}
                     message={chat.message}
-                    // type={chat.type}
+                    type={chat.type}
                   />
                 );
               })}

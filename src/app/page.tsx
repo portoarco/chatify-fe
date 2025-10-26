@@ -85,7 +85,7 @@ export default function Home() {
                 </Link>
                 <p className="text-xs font-light">
                   For testing, input code{" "}
-                  <span className="font-medium">11</span>{" "}
+                  <span className="font-medium">88</span>{" "}
                 </p>
               </div>
             </form>
